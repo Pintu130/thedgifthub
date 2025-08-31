@@ -30,10 +30,10 @@ export function LoginForm() {
         {loading ? "Signing in..." : "Sign in"}
       </Button>
       <div className="text-xs text-muted-foreground flex items-center justify-between">
-        <Link href="/(auth)/forgot-password" className="hover:underline">
+        <Link href="/forgot-password" className="hover:underline">
           Forgot password?
         </Link>
-        <Link href="/(auth)/register" className="hover:underline">
+        <Link href="/register" className="hover:underline">
           Create account
         </Link>
       </div>

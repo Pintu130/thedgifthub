@@ -29,7 +29,7 @@ export function RegisterForm() {
       </Button>
       <div className="text-xs text-muted-foreground text-center">
         Already have an account?{" "}
-        <Link href="/(auth)/login" className="hover:underline">
+        <Link href="/login" className="hover:underline">
           Sign in
         </Link>
       </div>
