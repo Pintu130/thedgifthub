@@ -1,0 +1,109 @@
+"use client"
+
+import type React from "react"
+import { createContext, useContext, useEffect, useMemo, useReducer } from "react"
+
+export type CartItem = {
+  id: string
+  name: string
+  price: number
+  image: string
+  slug: string
+  qty: number
+}
+
+type CartState = {
+  items: CartItem[]
+}
+
+type Action =
+  | { type: "ADD"; item: Omit<CartItem, "qty">; qty?: number }
+  | { type: "REMOVE"; id: string }
+  | { type: "SET_QTY"; id: string; qty: number }
+  | { type: "CLEAR" }
+
+const CartContext = createContext<{
+  state: CartState
+  add: (item: Omit<CartItem, "qty">, qty?: number) => void
+  remove: (id: string) => void
+  setQty: (id: string, qty: number) => void
+  clear: () => void
+} | null>(null)
+
+function reducer(state: CartState, action: Action): CartState {
+  switch (action.type) {
+    case "ADD": {
+      const qty = Math.max(1, action.qty ?? 1)
+      const existing = state.items.find((i) => i.id === action.item.id)
+      if (existing) {
+        return {
+          items: state.items.map((i) => (i.id === action.item.id ? { ...i, qty: i.qty + qty } : i)),
+        }
+      }
+      return { items: [...state.items, { ...action.item, qty }] }
+    }
+    case "REMOVE":
+      return { items: state.items.filter((i) => i.id !== action.id) }
+    case "SET_QTY":
+      return {
+        items: state.items.map((i) => (i.id === action.id ? { ...i, qty: Math.max(1, action.qty) } : i)),
+      }
+    case "CLEAR":
+      return { items: [] }
+    default:
+      return state
+  }
+}
+
+const STORAGE_KEY = "gift-cart-v1"
+
+export function CartProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, { items: [] })
+
+  // hydrate from localStorage
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        const parsed = JSON.parse(raw) as CartState
+        if (parsed && Array.isArray(parsed.items)) {
+          dispatch({ type: "CLEAR" })
+          parsed.items.forEach((item) =>
+            dispatch({
+              type: "ADD",
+              item: { id: item.id, name: item.name, price: item.price, image: item.image, slug: item.slug },
+              qty: item.qty,
+            }),
+          )
+        }
+      }
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // persist to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    } catch {}
+  }, [state])
+
+  const value = useMemo(
+    () => ({
+      state,
+      add: (item: Omit<CartItem, "qty">, qty?: number) => dispatch({ type: "ADD", item, qty }),
+      remove: (id: string) => dispatch({ type: "REMOVE", id }),
+      setQty: (id: string, qty: number) => dispatch({ type: "SET_QTY", id, qty }),
+      clear: () => dispatch({ type: "CLEAR" }),
+    }),
+    [state],
+  )
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+}
+
+export function useCart() {
+  const ctx = useContext(CartContext)
+  if (!ctx) throw new Error("useCart must be used within CartProvider")
+  return ctx
+}
