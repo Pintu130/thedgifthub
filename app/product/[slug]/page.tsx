@@ -221,7 +221,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       </div>
 
       {/* Fixed bottom bar on mobile */}
-      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="fixed bottom-14 inset-x-0 z-40 md:hidden border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-3">
           <button
             aria-label="Add to cart"

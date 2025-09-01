@@ -76,27 +76,18 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
               </SelectContent>
             </Select>
           </div>
-          <button
-            type="button"
-            className="md:hidden inline-flex items-center rounded-md border px-3 py-2 text-sm bg-background"
-            onClick={() => setShowFilters((v) => !v)}
-            aria-expanded={showFilters}
-            aria-controls="mobile-filters"
-          >
-            Filters
-          </button>
+          <div className="md:hidden">
+            <CategoryFilters isMobile />
+          </div>
         </div>
       </header>
-      {showFilters && (
-        <div id="mobile-filters" className="md:hidden mb-4">
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Desktop Filters */}
+        <div className="hidden md:block">
           <CategoryFilters />
         </div>
-      )}
-      <div className="grid grid-cols-1 md:grid-cols-[16rem_minmax(0,1fr)] gap-6">
-        <div className="hidden md:block md:sticky md:top-16">
-          <CategoryFilters />
-        </div>
-        <div className="col-span-1 md:col-span-2">
+        {/* Products Grid */}
+        <div className="flex-1">
           <ProductGrid products={products} />
         </div>
       </div>

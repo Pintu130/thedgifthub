@@ -19,7 +19,7 @@ export function ForgotPasswordForm() {
   return (
     <div className="space-y-3">
       <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <Button className="bg-emerald-600 hover:bg-emerald-700 w-full" onClick={submit} disabled={loading}>
+      <Button className="w-full" onClick={submit} disabled={loading}>
         {loading ? "Sending..." : "Send reset link"}
       </Button>
     </div>

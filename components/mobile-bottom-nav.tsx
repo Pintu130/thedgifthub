@@ -21,7 +21,7 @@ export default function MobileBottomNav() {
       aria-label="Bottom navigation"
       role="navigation"
     >
-      <div className="mx-auto flex h-14 max-w-xl items-center justify-between px-4">
+      <div className="mx-auto flex h-16 max-w-xl items-center justify-between px-2">
         <BottomItem href="/" label="Home" active={isActive("/")} count={undefined}>
           <Home size={22} aria-hidden="true" />
         </BottomItem>
@@ -60,7 +60,7 @@ function BottomItem({
       href={href}
       aria-label={label}
       className={cn(
-        "relative flex flex-col items-center justify-center gap-1 px-3 py-2 text-xs",
+        "relative flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-[10px] w-full",
         active ? "text-primary" : "text-muted-foreground",
       )}
     >
@@ -75,7 +75,7 @@ function BottomItem({
           </span>
         )}
       </span>
-      <span className="sr-only">{label}</span>
+      <span className="text-center leading-none">{label}</span>
     </Link>
   )
 }
