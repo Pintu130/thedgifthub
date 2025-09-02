@@ -18,6 +18,8 @@ export type Product = {
 export type Offer = {
   id: string
   title: string
+  description?: string
   image: string
   cta?: string
+  className?: string
 }

@@ -15,20 +15,26 @@ export function getOffers(): Offer[] {
     {
       id: "o1",
       title: "Corporate Gifting Made Easy",
-      image: "/corporate-gifting.png",
+      description: "Impress your clients and employees with our premium corporate gifts. Customized solutions for every business need and budget.",
+      image: "/corporate-gift-box.png",
       cta: "Explore Corporate Gifts",
+      className: "bg-gradient-to-r from-blue-600/70 to-blue-800/70"
     },
     {
       id: "o2",
       title: "Functional Phone Stands",
-      image: "/phone-stand.png",
+      description: "Enhance productivity with our ergonomic phone stands. Perfect for work, video calls, and hands-free viewing.",
+      image: "/aluminium-phone-stand.png",
       cta: "Shop Phone Stands",
+      className: "bg-gradient-to-r from-amber-600/70 to-amber-800/70"
     },
     {
       id: "o3",
       title: "Premium Diaries & Stationery",
-      image: "/diary-and-stationery.png",
+      description: "Elegant and functional diaries to keep you organized in style. Perfect for professionals and students alike.",
+      image: "/leather-diary.png",
       cta: "Browse Diaries",
+      className: "bg-gradient-to-r from-emerald-600/70 to-emerald-800/70"
     },
   ]
 }

@@ -22,22 +22,32 @@ export function HeroSlider({ offers }: { offers: Offer[] }) {
   const active = offers[index]
 
   return (
-    <section className="relative">
-      <div className="relative h-[320px] md:h-[460px]">
+    <section className="relative w-screen left-1/2 right-1/2 -mx-[50vw]">
+      <div className="relative w-screen h-[320px] md:h-[460px]">
         <Image
-          src={active.image || "/placeholder.svg?height=800&width=1600&query=gift%20offer%20banner"}
+          src={active.image || "/placeholder.svg?height=800&width=2500&query=gift%20offer%20banner"}
           alt={active.title}
           fill
-          className="object-cover"
+          className="object-cover w-full h-full shadow-sm"
           priority
+          sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 flex items-center px-4 md:px-8">
-          <div className="text-white space-y-3 max-w-xl">
-            <h1 className="text-3xl md:text-4xl font-semibold text-balance">{active.title}</h1>
-            {active.cta ? (
-              <Button className="bg-amber-500 hover:bg-amber-600 text-black font-medium">{active.cta}</Button>
-            ) : null}
+        <div className="absolute inset-0 flex items-center px-4 md:px-8 lg:px-16 xl:px-24">
+          <div className="space-y-4 max-w-2xl">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-md">{active.title}</h1>
+            {active.description && (
+              <p className="text-base md:text-lg text-white/90 leading-relaxed drop-shadow-md">
+                {active.description}
+              </p>
+            )}
+            {active.cta && (
+              <Button 
+                className="mt-4 px-8 py-6 text-base md:text-lg font-semibold bg-amber-500 hover:bg-amber-600 text-black transition-all duration-300 transform hover:scale-105"
+                size="lg"
+              >
+                {active.cta}
+              </Button>
+            )}
           </div>
         </div>
 
