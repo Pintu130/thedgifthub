@@ -3,10 +3,12 @@ import { CategoryGrid } from "@/components/category-grid"
 import { getFeaturedProducts, getOffers, getCategories, getProducts } from "@/lib/data"
 import FeaturedWithSearch from "@/components/featured-with-search"
 import { ProductGrid } from "@/components/product-grid"
+import { OffersSlider } from "@/components/offers-slider"
 
 export default function HomePage() {
   const offers = getOffers()
   const categories = getCategories()
+  console.log('Categories from getCategories():', categories)
   const featured = getFeaturedProducts()
   const all = getProducts()
 
@@ -20,6 +22,9 @@ export default function HomePage() {
         <h2 className="text-2xl md:text-3xl font-semibold text-pretty mb-6">Shop by Category</h2>
         <CategoryGrid categories={categories} />
       </section>
+      
+      <OffersSlider />
+      
       <FeaturedWithSearch products={featured} />
 
       <section className="px-4 md:px-8">

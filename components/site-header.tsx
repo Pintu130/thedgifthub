@@ -44,8 +44,10 @@ export function SiteHeader() {
                 <Link
                   key={n.href}
                   href={n.href}
-                  className={`text-sm ${
-                    pathname === n.href ? "text-primary font-medium" : "text-muted-foreground hover:text-foreground"
+                  className={`text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+                    pathname === n.href 
+                      ? "text-primary font-medium after:bg-[#C4294F] after:w-full" 
+                      : "text-muted-foreground hover:text-foreground after:bg-[#C4294F]"
                   }`}
                 >
                   {n.label}

@@ -22,8 +22,8 @@ export function HeroSlider({ offers }: { offers: Offer[] }) {
   const active = offers[index]
 
   return (
-    <section className="relative w-screen left-1/2 right-1/2 -mx-[50vw]">
-      <div className="relative w-screen h-[320px] md:h-[460px]">
+    <section className="relative w-screen left-1/2 right-1/2 -mx-[50vw] overflow-hidden">
+      <div className="relative h-[320px] md:h-[560px]">
         <Image
           src={active.image || "/placeholder.svg?height=800&width=2500&query=gift%20offer%20banner"}
           alt={active.title}
@@ -32,6 +32,7 @@ export function HeroSlider({ offers }: { offers: Offer[] }) {
           priority
           sizes="100vw"
         />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
         <div className="absolute inset-0 flex items-center px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="space-y-4 max-w-2xl">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-md">{active.title}</h1>
@@ -64,7 +65,7 @@ export function HeroSlider({ offers }: { offers: Offer[] }) {
 
         <div className="absolute inset-y-0 left-2 md:left-4 flex items-center">
           <button
-            className="h-10 w-10 rounded-full bg-white/70 hover:bg-white text-black"
+            className="hidden md:block h-10 w-10 rounded-full bg-white/70 hover:bg-white text-black"
             onClick={prev}
             aria-label="Previous slide"
           >
@@ -73,7 +74,7 @@ export function HeroSlider({ offers }: { offers: Offer[] }) {
         </div>
         <div className="absolute inset-y-0 right-2 md:right-4 flex items-center">
           <button
-            className="h-10 w-10 rounded-full bg-white/70 hover:bg-white text-black"
+            className="hidden md:block h-10 w-10 rounded-full bg-white/70 hover:bg-white text-black"
             onClick={next}
             aria-label="Next slide"
           >

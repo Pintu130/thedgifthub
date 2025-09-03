@@ -2,11 +2,46 @@ import type { Category, Product, Offer } from "./types"
 
 export function getCategories(): Category[] {
   return [
-    { slug: "corporate-gifts", name: "Corporate Gifts" },
-    { slug: "phone-stand", name: "Phone Stand" },
-    { slug: "diary", name: "Diary" },
-    { slug: "books", name: "Books" },
-    { slug: "key-stand", name: "Key Stand" },
+    { 
+      slug: "corporate-gifts", 
+      name: "Corporate Gifts",
+      image: "/corporate-gift-box.png"
+    },
+    { 
+      slug: "leather-bags", 
+      name: "Leather Bags",
+      image: "/leather-diary.png"
+    },
+    { 
+      slug: "coffee-mugs", 
+      name: "Coffee Mugs",
+      image: "/custom-photo-mug-gift.png"
+    },
+    { 
+      slug: "steel-water-bottles", 
+      name: "Steel Water Bottles",
+      image: "/gift-box-detail.png"
+    },
+    { 
+      slug: "table-decoration-items", 
+      name: "Table Decor",
+      image: "/placeholder.svg?height=96&width=96&query=gift%20category"
+    },
+    { 
+      slug: "wallet", 
+      name: "Wallets",
+      image: "/placeholder.svg?height=96&width=96&query=gift%20category"
+    },
+    { 
+      slug: "gift-sets", 
+      name: "Gift Sets",
+      image: "/gift-box-open.png"
+    },
+    { 
+      slug: "diaries", 
+      name: "Diaries",
+      image: "/diary-and-stationery.png"
+    },
   ]
 }
 
