@@ -1,4 +1,4 @@
-"use client"
+"use client" 
 
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form"
 import Link from "next/link"
@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
           <ForgotPasswordForm />
         </div>
         <div className="text-center text-sm text-gray-600">
-          <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+          <Link href="/login" className="font-medium text-gray-600 hover:text-gray-500">
             Back to login
           </Link>
         </div>
