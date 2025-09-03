@@ -25,7 +25,7 @@ export function OffersSlider() {
       description: 'GET UPTO',
       discount: '20%',
       code: 'GREEN20',
-      buttonText: 'SHOP NOW',
+      buttonText: 'OPEN',
       products: [
         { image: '/oak-key-stand.png', alt: 'Oak Key Stand' },
         { image: '/aluminium-phone-stand.png', alt: 'Aluminium Phone Stand' },
@@ -88,8 +88,8 @@ export function OffersSlider() {
           
           {/* Middle: Promo Code */}
           <div className="flex flex-col items-center justify-center my-4 md:my-0 md:mx-8">
-            <span className="text-white text-sm font-semibold mb-1">USE CODE</span>
-            <span className="text-white text-3xl font-black tracking-widest mb-2">{currentOffer.code}</span>
+            <span className="text-white text-sm font-semibold mb-1">LIMITED TIME OFFER</span>
+            <span className="text-white text-3xl font-black tracking-wide mb-2">SHOP NOW</span>
             <Button 
               className="bg-white text-[#a30446] hover:bg-gray-100 font-bold py-2 px-6 rounded-full text-lg"
             >
@@ -98,13 +98,13 @@ export function OffersSlider() {
           </div>
           
           {/* Right: Product Images */}
-          <div className="hidden md:flex gap-4">
+          <div className="hidden md:flex gap-6 items-center">
             {currentOffer.products.map((product, index) => (
-              <div key={index} className="w-20 h-28 bg-white/10 rounded-lg overflow-hidden">
+              <div key={index} className="w-24 h-24 bg-white rounded-full flex items-center justify-center p-1">
                 <img 
                   src={product.image} 
                   alt={product.alt}
-                  className="w-full h-full object-contain p-2"
+                  className="w-20 h-20 object-cover rounded-full"
                 />
               </div>
             ))}

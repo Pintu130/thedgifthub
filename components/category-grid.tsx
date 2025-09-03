@@ -3,7 +3,6 @@ import Image from "next/image"
 import type { Category } from "@/lib/types"
 
 export function CategoryGrid({ categories }: { categories: Category[] }) {
-  console.log('000000000000000', categories)
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 px-4 sm:px-6">
       {categories.map((c) => (

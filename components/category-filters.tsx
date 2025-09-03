@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Star, Tag, IndianRupee, X } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface CategoryFiltersProps {
   isMobile?: boolean
@@ -71,7 +72,7 @@ export function CategoryFilters({ isMobile = false, onApply, onClear }: Category
   }
 
   const renderFilters = () => (
-    <>
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Filters</h2>
         {!isMobile && (
@@ -171,14 +172,32 @@ export function CategoryFilters({ isMobile = false, onApply, onClear }: Category
           </Button>
         </div>
       )}
-    </>
+    </div>
   )
 
   // Desktop view
   if (!isMobile) {
     return (
       <aside className="w-72 space-y-6 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto pb-20">
-        {renderFilters()}
+        <div className="p-4">
+          <div className="w-full mb-6">
+            <Select value={params.get("sort") || "newest"} onValueChange={(value) => {
+              const sp = new URLSearchParams(params.toString())
+              sp.set("sort", value)
+              router.push(`${pathname}?${sp.toString()}`)
+            }}>
+              <SelectTrigger aria-label="Sort products">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">Price: Low to High</SelectItem>
+                <SelectItem value="high">Price: High to Low</SelectItem>
+                <SelectItem value="newest">Newest</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {renderFilters()}
+        </div>
       </aside>
     )
   }

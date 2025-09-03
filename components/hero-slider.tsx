@@ -43,7 +43,7 @@ export function HeroSlider({ offers }: { offers: Offer[] }) {
             )}
             {active.cta && (
               <Button 
-                className="mt-4 px-8 py-6 text-base md:text-lg font-semibold bg-amber-500 hover:bg-amber-600 text-black transition-all duration-300 transform hover:scale-105"
+                className="mt-4 px-8 py-6 text-base md:text-lg font-semibold bg-[#FFB700] hover:bg-[#FFB700] text-black transition-all duration-300 transform hover:scale-105 cursor-pointer"
                 size="lg"
               >
                 {active.cta}
