@@ -70,7 +70,7 @@ export function SiteHeader() {
                 </Link>
               </Button>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/login">Login</Link>
+                <Link href="/register">Login</Link>
               </Button>
               <Button asChild variant="ghost" size="sm">
                 <Link href="/cart" aria-label="Cart" className="inline-flex items-center relative">

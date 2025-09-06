@@ -185,27 +185,44 @@ export function CategoryFilters({ isMobile = false, onApply, onClear }: Category
 
   // Mobile view - Sheet component
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" className="md:hidden flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-            <line x1="3" x2="21" y1="6" y2="6"></line>
-            <line x1="3" x2="21" y1="12" y2="12"></line>
-            <line x1="3" x2="21" y1="18" y2="18"></line>
-          </svg>
-          Filters
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="right" className="w-[85vw] max-w-md p-0 flex flex-col">
-        <SheetHeader className="border-b p-4">
-          <SheetTitle className="text-lg font-semibold">Filters</SheetTitle>
-        </SheetHeader>
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-6">
-            {renderFilters()}
-          </div>
-        </ScrollArea>
-      </SheetContent>
-    </Sheet>
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="outline" className="md:hidden flex items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-4 w-4"
+      >
+        <line x1="3" x2="21" y1="6" y2="6" />
+        <line x1="3" x2="21" y1="12" y2="12" />
+        <line x1="3" x2="21" y1="18" y2="18" />
+      </svg>
+      Filters
+    </Button>
+  </SheetTrigger>
+
+  <SheetContent
+    side="right"
+    className="w-[85vw] max-w-md h-screen flex flex-col p-0"
+  >
+    {/* Sticky Header */}
+    <SheetHeader className="border-b p-4 shrink-0">
+      <SheetTitle className="text-lg font-semibold">Filters</SheetTitle>
+    </SheetHeader>
+
+    {/* Scrollable Content */}
+    <div className="flex-1 overflow-y-auto p-4">
+      <div className="space-y-6">{renderFilters()}</div>
+    </div>
+  </SheetContent>
+</Sheet>
+
   )
 }

@@ -63,7 +63,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     <div className="px-4 md:px-8 py-6 max-w-6xl mx-auto">
       <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4">
         <h1 className="text-2xl md:text-3xl font-semibold">{category.name}</h1>
-        <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex justify-between items-center gap-3 w-full md:w-auto">
           <div className="w-40">
             <Select value={sortParam} onValueChange={onSortChange}>
               <SelectTrigger aria-label="Sort products">

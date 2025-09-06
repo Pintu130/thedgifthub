@@ -4,6 +4,8 @@ import { useAppSelector } from "@/store/hooks"
 import { selectWatchlistIds } from "@/store/slices/watchlist-slice"
 import { ProductGrid } from "@/components/product-grid"
 import { getProducts } from "@/lib/data"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function WatchlistPage() {
   const ids = useAppSelector(selectWatchlistIds)
@@ -15,7 +17,12 @@ export default function WatchlistPage() {
       {products.length ? (
         <ProductGrid products={products} />
       ) : (
-        <p className="text-sm text-muted-foreground">No saved items yet.</p>
+        <>
+          <p className="text-sm text-muted-foreground mb-4">No saved items yet.</p>
+          <Button asChild>
+            <Link href="/">Continue Shopping</Link>
+          </Button>
+        </>
       )}
     </main>
   )

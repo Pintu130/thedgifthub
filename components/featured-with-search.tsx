@@ -23,7 +23,7 @@ export default function FeaturedWithSearch({ products }: { products: Product[] }
   }, [products, query])
 
   return (
-    <section className="px-4 md:px-8 pb-8 space-y-6">
+    <section className="px-4 md:px-8 pb-8 space-y-6 max-w-6xl mx-auto">
       <div className="flex flex-col gap-3">
         <h2 className="text-2xl md:text-3xl font-semibold text-pretty">Featured Gifts</h2>
         <SearchAutocomplete placeholder="Search gifts (e.g. mug, bouquet, diary)" onQueryChange={(q) => setQuery(q)} />
