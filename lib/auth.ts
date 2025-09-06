@@ -7,7 +7,7 @@ import {
   User
 } from "firebase/auth"
 import { doc, setDoc, getDoc } from "firebase/firestore"
-import { auth, db } from "./firebase"
+import { getFirebaseAuth, getFirebaseDb } from "./firebase"
 import { setUserData, removeUserData, getUserData } from "./localStorage"
 import { setAuthTokenCookie, removeAuthTokenCookie, getAuthTokenCookie } from "./cookies"
 
@@ -22,6 +22,13 @@ export interface UserData {
 // Register user with email verification
 export async function registerUser(email: string, password: string, name: string) {
   try {
+    if (typeof window === 'undefined') {
+      return { success: false, error: "Not available during server-side rendering" }
+    }
+    
+    const auth = getFirebaseAuth()
+    const db = getFirebaseDb()
+    
     // Create user account
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
@@ -52,6 +59,13 @@ export async function registerUser(email: string, password: string, name: string
 // Login user
 export async function loginUser(email: string, password: string) {
   try {
+    if (typeof window === 'undefined') {
+      return { success: false, error: "Not available during server-side rendering" }
+    }
+    
+    const auth = getFirebaseAuth()
+    const db = getFirebaseDb()
+    
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
 
@@ -102,6 +116,11 @@ export async function loginUser(email: string, password: string) {
 // Logout user
 export async function logoutUser() {
   try {
+    if (typeof window === 'undefined') {
+      return { success: false, error: "Not available during server-side rendering" }
+    }
+    
+    const auth = getFirebaseAuth()
     await signOut(auth)
     
     // Clear user data from localStorage
@@ -133,5 +152,14 @@ export function isUserLoggedIn(): boolean {
 
 // Auth state observer
 export function onAuthStateChange(callback: (user: User | null) => void) {
-  return onAuthStateChanged(auth, callback)
+  if (typeof window === 'undefined') {
+    return () => {} // Return empty unsubscribe function during SSR
+  }
+  
+  try {
+    const auth = getFirebaseAuth()
+    return onAuthStateChanged(auth, callback)
+  } catch {
+    return () => {} // Return empty unsubscribe function if Firebase fails
+  }
 }
