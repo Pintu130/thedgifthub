@@ -21,7 +21,7 @@ export function RatingStars({
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      className={cn("text-yellow-500 inline-block", fill === "none" && "opacity-40")}
+      className={cn("text-primary inline-block", fill === "none" && "opacity-40")}
     >
       <path
         fill={fill}

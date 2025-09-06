@@ -1,7 +1,7 @@
 "use client"
 import Script from "next/script"
 import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { ShoppingCart, Bolt, MapPin, BadgePercent, Star } from "lucide-react"
 
 import { useAppDispatch } from "@/store/hooks"
@@ -9,6 +9,8 @@ import { addItem } from "@/store/slices/cart-slice"
 import { getProductBySlug } from "@/lib/data"
 import { Reviews, type Review } from "@/components/reviews"
 import { ProductGallery } from "@/components/product-gallery"
+import { isUserLoggedIn } from "@/lib/auth"
+import { setPendingCartItem, getPendingCartItem, removePendingCartItem } from "@/lib/localStorage"
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const [pincode, setPincode] = useState("")
@@ -24,21 +26,60 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const mrp = useMemo(() => (product ? Math.round(product.price * 1.35 * 100) / 100 : 0), [product])
   const offPct = useMemo(() => (product ? Math.round(((mrp - product.price) / mrp) * 100) : 0), [mrp, product])
 
+  // Check for pending cart item on component mount
+  useEffect(() => {
+    const pendingItem = getPendingCartItem()
+    if (pendingItem && isUserLoggedIn()) {
+      // User is now logged in, add the pending item to cart
+      dispatch(addItem(pendingItem))
+      removePendingCartItem()
+    }
+  }, [dispatch])
+
   const addToCart = () => {
     if (!product) return
-    dispatch(
-      addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.images?.[0] || "/gift-product.png",
-        qty: 1,
-      }),
-    )
+
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images?.[0] || "/gift-product.png",
+      qty: 1,
+    }
+
+    // Check if user is logged in
+    if (!isUserLoggedIn()) {
+      // Store item temporarily and redirect to login
+      setPendingCartItem(cartItem)
+      router.push("/login?redirect=" + encodeURIComponent(window.location.pathname))
+      return
+    }
+
+    // User is logged in, add to cart normally
+    dispatch(addItem(cartItem))
   }
 
   const buyNow = () => {
-    addToCart()
+    if (!product) return
+
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images?.[0] || "/gift-product.png",
+      qty: 1,
+    }
+
+    // Check if user is logged in
+    if (!isUserLoggedIn()) {
+      // Store item temporarily and redirect to login
+      setPendingCartItem(cartItem)
+      router.push("/login?redirect=" + encodeURIComponent("/cart"))
+      return
+    }
+
+    // User is logged in, add to cart and go to cart page
+    dispatch(addItem(cartItem))
     router.push("/cart")
   }
 
@@ -128,7 +169,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
               <div className="flex items-center gap-2 text-sm my-2">
                 <span className="inline-flex items-center gap-1 rounded-md border px-2 py-0.5">
-                  <Star className="h-4 w-4 fill-current text-yellow-500" /> {rating.toFixed(1)}
+                  <Star className="h-4 w-4 fill-current text-primary" /> {rating.toFixed(1)}
                 </span>
                 <a href="#reviews" className="text-primary hover:underline">
                   {reviewCount} Reviews

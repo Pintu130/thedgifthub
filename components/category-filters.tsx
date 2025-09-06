@@ -127,7 +127,7 @@ export function CategoryFilters({ isMobile = false, onApply, onClear }: Category
               />
               <Label htmlFor={`rating-${star}`} className="flex items-center text-sm font-normal">
                 {Array(star).fill(0).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                 ))}
                 <span className="ml-1">&amp; up</span>
               </Label>

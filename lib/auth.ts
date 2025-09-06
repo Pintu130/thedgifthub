@@ -8,6 +8,8 @@ import {
 } from "firebase/auth"
 import { doc, setDoc, getDoc } from "firebase/firestore"
 import { auth, db } from "./firebase"
+import { setUserData, removeUserData, getUserData } from "./localStorage"
+import { setAuthTokenCookie, removeAuthTokenCookie, getAuthTokenCookie } from "./cookies"
 
 export interface UserData {
   uid: string
@@ -73,7 +75,22 @@ export async function loginUser(email: string, password: string) {
           emailVerified: true 
         }, { merge: true })
       }
-      return { success: true, user: { ...userData, emailVerified: true } }
+      
+      const finalUserData = { ...userData, emailVerified: true }
+      
+      // Store user data in localStorage
+      setUserData(finalUserData)
+      
+      // Store auth token (Firebase ID token) in cookies
+      const token = await user.getIdToken()
+      setAuthTokenCookie(token)
+      
+      // Trigger custom event to update UI immediately
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('userLoggedIn'))
+      }
+      
+      return { success: true, user: finalUserData }
     }
 
     return { success: false, error: "User data not found" }
@@ -86,10 +103,32 @@ export async function loginUser(email: string, password: string) {
 export async function logoutUser() {
   try {
     await signOut(auth)
+    
+    // Clear user data from localStorage
+    removeUserData()
+    removeAuthTokenCookie()
+    
     return { success: true }
   } catch (error: any) {
     return { success: false, error: error.message }
   }
+}
+
+// Get current user from localStorage
+export function getCurrentUser(): UserData | null {
+  return getUserData()
+}
+
+// Get current auth token from cookies
+export function getCurrentAuthToken(): string | null {
+  return getAuthTokenCookie()
+}
+
+// Check if user is logged in
+export function isUserLoggedIn(): boolean {
+  const user = getCurrentUser()
+  const token = getCurrentAuthToken()
+  return !!(user && token)
 }
 
 // Auth state observer

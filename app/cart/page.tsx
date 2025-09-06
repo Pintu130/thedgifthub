@@ -45,9 +45,13 @@ export default function CartPage() {
                     height={100}
                     className="rounded-md object-cover w-24 h-24 border"
                   />
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     <p className="font-semibold text-lg">{item.name}</p>
-                    <p className="font-bold text-[#be123c]">${item.price.toFixed(2)}</p>
+                    <div className="flex items-end gap-3">
+                      <p className="text-primary text-xl font-semibold">${item.price.toFixed(2)}</p>
+                      <p className="text-muted-foreground line-through">${(item.price * 1.35).toFixed(2)}</p>
+                      <p className="text-green-600 text-sm font-medium">26% off</p>
+                    </div>
                   </div>
                 </div>
 
@@ -93,17 +97,42 @@ export default function CartPage() {
           </ul>
 
           {/* Cart Summary */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between border-t pt-6">
-            <p className="text-xl">
-              Total: <span className="font-bold text-[#be123c]">${total.toFixed(2)}</span>
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="bg-[#be123c] hover:bg-[#e92153] text-white px-6 py-3 rounded-lg"
-            >
-              <Link href="/checkout">Proceed to Checkout</Link>
-            </Button>
+          <div className="border-t pt-6 space-y-4">
+            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+              <h3 className="font-semibold text-lg">Price Details</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>Price ({items.reduce((sum, item) => sum + item.qty, 0)} items)</span>
+                  <span>${(total * 1.35).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-green-600">
+                  <span>Discount</span>
+                  <span>-${(total * 0.35).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Delivery Charges</span>
+                  <span className="text-green-600">FREE</span>
+                </div>
+                <hr className="my-2" />
+                <div className="flex justify-between font-semibold text-lg">
+                  <span>Total Amount</span>
+                  <span className="text-primary">${total.toFixed(2)}</span>
+                </div>
+                <p className="text-green-600 text-sm font-medium">
+                  You will save ${(total * 0.35).toFixed(2)} on this order
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex justify-end">
+              <Button
+                asChild
+                size="lg"
+                className="bg-[#be123c] hover:bg-[#e92153] text-white px-8 py-3 rounded-lg"
+              >
+                <Link href="/checkout">Proceed to Checkout</Link>
+              </Button>
+            </div>
           </div>
         </>
       )}
